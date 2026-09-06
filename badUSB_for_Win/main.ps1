@@ -1,3 +1,4 @@
+
 Start-Job -ScriptBlock {
     $url = 'https://raw.githubusercontent.com/usercode-admin/Badusb-Badble/main/main.png'
     $temp = "$env:TEMP\temp.png"
@@ -58,8 +59,8 @@ while ($true) {
     $form = New-Object System.Windows.Forms.Form
     $form.FormBorderStyle = 'None'
     $form.StartPosition = 'Manual'
-    $form.Width = 400
-    $form.Height = 120
+    $form.Width = 350           
+    $form.Height = 80           
     $form.Left = (Get-Random -Min 0 -Max ($scr.Width - $form.Width))
     $form.Top = (Get-Random -Min 0 -Max ($scr.Height - $form.Height))
     $form.BackColor = [System.Drawing.Color]::Black
@@ -67,8 +68,8 @@ while ($true) {
     $form.ControlBox = $false
 
     $label = New-Object System.Windows.Forms.Label
-    $label.Text = "HELLO WORLD"
-    $label.Font = New-Object System.Drawing.Font("Arial", 48, [System.Drawing.FontStyle]::Bold)
+    $label.Text = "Tiktok: @kne_rdick"   
+    $label.Font = New-Object System.Drawing.Font("Arial", 20, [System.Drawing.FontStyle]::Bold)   # Font 20, vừa đẹp
     $label.ForeColor = [System.Drawing.Color]::White
     $label.BackColor = [System.Drawing.Color]::Black
     $label.AutoSize = $false
@@ -91,5 +92,4 @@ while ($true) {
     Start-Sleep -Seconds 1
 }
 
-# Giữ script chạy
 while ($true) { Start-Sleep 1 }
