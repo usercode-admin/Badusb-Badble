@@ -1,4 +1,4 @@
-# === BADUSB TROLL - BẢN CHUẨN NHẤT (fix popup trắng) ===
+# === BADUSB TROLL - BẢN FULL TÍNH NĂNG ===
 
 # 1. TẢI ẢNH
 $url1 = 'https://raw.githubusercontent.com/usercode-admin/Badusb-Badble/main/main.png'
@@ -13,7 +13,6 @@ try {
     Invoke-WebRequest -Uri $url1 -OutFile $temp1 -UseBasicParsing
     Invoke-WebRequest -Uri $url2 -OutFile $temp2 -UseBasicParsing
 } catch {
-    # Nếu lỗi, tạo ảnh dự phòng
     Add-Type -AssemblyName System.Drawing
     $bmp = New-Object System.Drawing.Bitmap(1920, 1080)
     $g = [System.Drawing.Graphics]::FromImage($bmp)
@@ -54,14 +53,12 @@ namespace Win32 {
 
 [Win32.Wp]::SystemParametersInfo(20, 0, $save1, 3)
 
-# 4. LOAD ẢNH VÀO BỘ NHỚ TRƯỚC (KHÔNG BỊ TRẮNG)
+# 4. LOAD ẢNH VÀO BỘ NHỚ
 Add-Type -AssemblyName System.Windows.Forms, System.Drawing
 
-# Load cả 2 ảnh thành đối tượng Image
 $img1 = [System.Drawing.Image]::FromFile($save1)
 $img2 = [System.Drawing.Image]::FromFile($save2)
 
-# Nếu load lỗi, tạo ảnh đỏ
 if (-not $img1) {
     $bmp = New-Object System.Drawing.Bitmap(400, 500)
     $g = [System.Drawing.Graphics]::FromImage($bmp)
@@ -75,7 +72,31 @@ if (-not $img2) {
     $img2 = $bmp
 }
 
-# 5. TẠO POPUP KHÔNG BỊ TRẮNG
+# ==== 5. HIỂN THỊ BẢNG "HELLO WORLD" Ở GIỮA MÀN HÌNH ====
+$labelForm = New-Object System.Windows.Forms.Form
+$labelForm.FormBorderStyle = 'None'
+$labelForm.StartPosition = 'CenterScreen'  # Nằm chính giữa màn hình
+$labelForm.Width = 600
+$labelForm.Height = 300
+$labelForm.BackColor = [System.Drawing.Color]::FromArgb(0, 0, 0, 0)  # Nền trong suốt
+$labelForm.TopMost = $true
+$labelForm.ControlBox = $false
+
+$label = New-Object System.Windows.Forms.Label
+$label.Text = "Hello world"
+$label.Font = New-Object System.Drawing.Font("Arial", 72, [System.Drawing.FontStyle]::Bold)
+$label.ForeColor = [System.Drawing.Color]::White
+$label.BackColor = [System.Drawing.Color]::FromArgb(128, 0, 0, 0)  # Nền đen mờ
+$label.AutoSize = $false
+$label.Width = 600
+$label.Height = 300
+$label.TextAlign = 'MiddleCenter'
+$label.Dock = 'Fill'
+
+$labelForm.Controls.Add($label)
+$labelForm.Show()
+
+# ==== 6. TẠO POPUP ẢNH ====
 $scr = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
 
 for ($i = 0; $i -lt 15; $i++) {
@@ -90,9 +111,8 @@ for ($i = 0; $i -lt 15; $i++) {
 
     $pb = New-Object System.Windows.Forms.PictureBox
     $pb.Dock = 'Fill'
-    # Gán ảnh đã load sẵn (không dùng ImageLocation)
     if ((Get-Random -Min 1 -Max 3) -eq 1) {
-        $pb.Image = $img1.Clone()  # Clone để tránh lỗi sharing
+        $pb.Image = $img1.Clone()
     } else {
         $pb.Image = $img2.Clone()
     }
@@ -102,5 +122,5 @@ for ($i = 0; $i -lt 15; $i++) {
     Start-Sleep -Milliseconds 100
 }
 
-# 6. GIỮ POPUP
+# 7. GIỮ TẤT CẢ CỬA SỔ
 while ($true) { Start-Sleep 1 }
