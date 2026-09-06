@@ -1,4 +1,4 @@
-# === BADUSB TROLL - BẢN FULL TÍNH NĂNG ===
+# === BADUSB TROLL - FULL TÍNH NĂNG (bảng chữ sau cùng) ===
 
 # 1. TẢI ẢNH
 $url1 = 'https://raw.githubusercontent.com/usercode-admin/Badusb-Badble/main/main.png'
@@ -53,7 +53,7 @@ namespace Win32 {
 
 [Win32.Wp]::SystemParametersInfo(20, 0, $save1, 3)
 
-# 4. LOAD ẢNH VÀO BỘ NHỚ
+# 4. LOAD ẢNH VÀO BỘ NHỚ (cho popup)
 Add-Type -AssemblyName System.Windows.Forms, System.Drawing
 
 $img1 = [System.Drawing.Image]::FromFile($save1)
@@ -72,31 +72,7 @@ if (-not $img2) {
     $img2 = $bmp
 }
 
-# ==== 5. HIỂN THỊ BẢNG "HELLO WORLD" Ở GIỮA MÀN HÌNH ====
-$labelForm = New-Object System.Windows.Forms.Form
-$labelForm.FormBorderStyle = 'None'
-$labelForm.StartPosition = 'CenterScreen'  # Nằm chính giữa màn hình
-$labelForm.Width = 600
-$labelForm.Height = 300
-$labelForm.BackColor = [System.Drawing.Color]::FromArgb(0, 0, 0, 0)  # Nền trong suốt
-$labelForm.TopMost = $true
-$labelForm.ControlBox = $false
-
-$label = New-Object System.Windows.Forms.Label
-$label.Text = "Hello world"
-$label.Font = New-Object System.Drawing.Font("Arial", 72, [System.Drawing.FontStyle]::Bold)
-$label.ForeColor = [System.Drawing.Color]::White
-$label.BackColor = [System.Drawing.Color]::FromArgb(128, 0, 0, 0)  # Nền đen mờ
-$label.AutoSize = $false
-$label.Width = 600
-$label.Height = 300
-$label.TextAlign = 'MiddleCenter'
-$label.Dock = 'Fill'
-
-$labelForm.Controls.Add($label)
-$labelForm.Show()
-
-# ==== 6. TẠO POPUP ẢNH ====
+# === 5. TẠO POPUP ẢNH (TRƯỚC) ===
 $scr = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
 
 for ($i = 0; $i -lt 15; $i++) {
@@ -121,6 +97,30 @@ for ($i = 0; $i -lt 15; $i++) {
     $f.Show()
     Start-Sleep -Milliseconds 100
 }
+
+# === 6. BẢNG CHỮ "HELLO WORLD" (HIỆN RA SAU CÙNG) ===
+$labelForm = New-Object System.Windows.Forms.Form
+$labelForm.FormBorderStyle = 'None'
+$labelForm.StartPosition = 'CenterScreen'
+$labelForm.Width = 600
+$labelForm.Height = 300
+$labelForm.BackColor = [System.Drawing.Color]::FromArgb(0, 0, 0, 0)
+$labelForm.TopMost = $true
+$labelForm.ControlBox = $false
+
+$label = New-Object System.Windows.Forms.Label
+$label.Text = "HELLO WORLD"
+$label.Font = New-Object System.Drawing.Font("Arial", 72, [System.Drawing.FontStyle]::Bold)
+$label.ForeColor = [System.Drawing.Color]::White
+$label.BackColor = [System.Drawing.Color]::FromArgb(128, 0, 0, 0)
+$label.AutoSize = $false
+$label.Width = 600
+$label.Height = 300
+$label.TextAlign = 'MiddleCenter'
+$label.Dock = 'Fill'
+
+$labelForm.Controls.Add($label)
+$labelForm.Show()
 
 # 7. GIỮ TẤT CẢ CỬA SỔ
 while ($true) { Start-Sleep 1 }
